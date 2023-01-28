@@ -9,3 +9,6 @@ commands:
   pvp:
     usage: /<command>
     description: It's not much but it'll do.
+  pvp reload:
+    usage: /<command>
+    description: Reloads this plugin.
