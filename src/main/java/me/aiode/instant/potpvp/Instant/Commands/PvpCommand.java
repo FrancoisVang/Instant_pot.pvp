@@ -8,9 +8,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionType;
 
 public class PvpCommand implements CommandExecutor {
 
@@ -25,11 +27,12 @@ public class PvpCommand implements CommandExecutor {
         }
 
         Player p = (Player) sender;
-        String prefix = plugin.getConfig().getString("prefix");
+        String prefix = plugin.getConfig().getString(ChatColor.translateAlternateColorCodes('&',"prefix"));
 
 
         if (strings.length == 0) {
             if (p.hasPermission("instantpotpvp.pvp")) {
+                //Apply inventory layout non-configurable
                 if (!p.getInventory().isEmpty()) {
                     //checks if inventory and armor set is empty.
                     sender.sendMessage("You must clear your inventory and armor.");
@@ -46,6 +49,7 @@ public class PvpCommand implements CommandExecutor {
                         ItemStack leggingsDiamond = new ItemStack(Material.DIAMOND_LEGGINGS, 1);
                         ItemStack chestplateDiamond = new ItemStack(Material.DIAMOND_CHESTPLATE, 1);
                         ItemStack helmetDiamond = new ItemStack(Material.DIAMOND_HELMET, 1);
+                        ItemStack offhand = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
                         //Enchantments
                         bootsDiamond.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, plugin.getConfig().getInt("Boots Protection Level"));
                         leggingsDiamond.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, plugin.getConfig().getInt("Leggings Protection Level"));
@@ -60,6 +64,7 @@ public class PvpCommand implements CommandExecutor {
                         p.getInventory().setLeggings(leggingsDiamond);
                         p.getInventory().setBoots(bootsDiamond);
                         p.getInventory().setItem(0, swordDiamond);
+                        p.getInventory().setItemInOffHand(offhand);
                         // Ready message.
                         sender.sendMessage(prefix+"You are ready to pvp!");
                     } else if (armor.toString().contains("nether".toUpperCase())) {
@@ -67,6 +72,7 @@ public class PvpCommand implements CommandExecutor {
                         ItemStack leggingsNetherite = new ItemStack(Material.NETHERITE_LEGGINGS, 1);
                         ItemStack chestplateNetherite = new ItemStack(Material.NETHERITE_CHESTPLATE, 1);
                         ItemStack helmetNetherite = new ItemStack(Material.NETHERITE_HELMET, 1);
+                        ItemStack offhand = new ItemStack(Material.TOTEM_OF_UNDYING, 1);
                         //Add enchantments
                         bootsNetherite.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, plugin.getConfig().getInt("Boots Protection Level"));
                         leggingsNetherite.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, plugin.getConfig().getInt("Leggings Protection Level"));
@@ -80,8 +86,11 @@ public class PvpCommand implements CommandExecutor {
                         p.getInventory().setChestplate(chestplateNetherite);
                         p.getInventory().setLeggings(leggingsNetherite);
                         p.getInventory().setBoots(bootsNetherite);
+
                         //set inventory
                         p.getInventory().setItem(0, swordNetherite);
+                        p.getInventory().setItemInOffHand(offhand);
+
                         // Ready message.
                         sender.sendMessage(prefix + "You are ready to pvp!");
                     }
@@ -91,7 +100,7 @@ public class PvpCommand implements CommandExecutor {
                 }
             }
         }
-        else if (strings.length == 1 && strings[0].equalsIgnoreCase("reload")) {
+        else if (strings.length == 1 && strings[0].equalsIgnoreCase("reload") && p.hasPermission("instantpotpvp.reload")) {
             if (sender instanceof Player || sender instanceof ConsoleCommandSender) {
                 plugin.saveDefaultConfig();
                 plugin.reloadConfig();
