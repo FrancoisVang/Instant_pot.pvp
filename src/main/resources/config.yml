@@ -1,0 +1,17 @@
+# Instant PotPVP Configuration File                   #
+#                                                     #
+# Supported Types Diamond & Netherite                 #
+# Usage: Sword type: 'diamond or nether'              #
+prefix: 'Instant PVP: '
+sword_type: 'DIAMOND_SWORD'
+armor_type: 'diamond'
+#                                                     #
+#                                                     #
+#                                                     #
+# Only change the values to the desired enchantments, #
+# vanilla enchantment limit only                      #
+Sword Sharpness Level: 1
+Helmet Protection Level: 2
+Chestplate Protection Level: 2
+Leggings Protection Level: 2
+Boots Protection Level: 2
